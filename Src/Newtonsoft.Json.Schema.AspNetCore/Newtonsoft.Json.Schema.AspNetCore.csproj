@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
+    <DefineConstants>$(AdditionalConstants)</DefineConstants>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
+    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <Authors>Newtonsoft</Authors>
+    <Company>Newtonsoft</Company>
+    <Product>Json.NET Schema for ASP.NET Core</Product>
+    <Description>Json.NET Schema integration for ASP.NET Core</Description>
+    <Copyright>Copyright © Newtonsoft 2017</Copyright>
+    <Summary>Json.NET Schema integration for ASP.NET Core</Summary>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Title>Json.NET Schema for ASP.NET Core</Title>
+    <PackageId>Newtonsoft.Json.Schema.AspNetCore</PackageId>
+    <PackageTags>json;schema;jsonschema;aspnetcore</PackageTags>
+    <PackageIconUrl>https://www.newtonsoft.com/content/images/nugeticon.png</PackageIconUrl>
+    <PackageProjectUrl>https://www.newtonsoft.com/jsonschema</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.github.com/JamesNK/Newtonsoft.Json.Schema.AspNetCore/master/LICENSE.md</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/JamesNK/Newtonsoft.Json.Schema.AspNetCore</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RootNamespace>Newtonsoft.Json.Schema.AspNetCore</RootNamespace>
+    <AssemblyName>Newtonsoft.Json.Schema.AspNetCore</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <MinClientVersion>2.12</MinClientVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json.Schema" Version="3.0.3" />
+  </ItemGroup>
+
+</Project>
