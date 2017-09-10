@@ -4,8 +4,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Newtonsoft.Json.Schema.AspNetCore.Infrastructure;
 
 namespace Newtonsoft.Json.Schema.AspNetCore.Tests.Fakes

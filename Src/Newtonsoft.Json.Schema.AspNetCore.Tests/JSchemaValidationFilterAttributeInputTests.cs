@@ -14,9 +14,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
-using Moq;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema.AspNetCore.Infrastructure;
 using Newtonsoft.Json.Schema.AspNetCore.Tests.Fakes;
 using Xunit;
 
