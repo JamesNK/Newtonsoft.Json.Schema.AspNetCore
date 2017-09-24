@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema.AspNetCore.Infrastructure;
 using Newtonsoft.Json.Schema.AspNetCore.Tests.Fakes;
 using Xunit;
 
@@ -145,10 +146,9 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Tests
 
             JSchemaValidationFilterAttribute attribute = new JSchemaValidationFilterAttribute();
 
-            HttpContext httpContext = new DefaultHttpContext();
-            httpContext.Response.Body = new MemoryStream();
+            HttpContext httpContext = ObjectFactory.CreateHttpContext();
 
-            JSchemaValidationErrorsException ex = await Assert.ThrowsAsync<JSchemaValidationErrorsException>(() => CallOnResultExecutionAsync(attribute, new Func<string>(() => string.Empty).Method, "123", httpContext));
+            JSchemaValidationErrorsException ex = await Assert.ThrowsAsync<JSchemaValidationErrorsException>(() => CallOnResultExecutionAsync(attribute, new Func<string>(() => string.Empty).Method, content, httpContext));
 
             Assert.Equal("Invalid type. Expected String but got Integer.", ex.SchemaValidationErrors[0].Message);
 
@@ -161,14 +161,23 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Tests
         }
 
         [Fact]
+        public async Task OnResultExecutionAsync_NonJsonContentType_Error()
+        {
+            JSchemaValidationFilterAttribute attribute = new JSchemaValidationFilterAttribute();
+
+            HttpContext httpContext = ObjectFactory.CreateHttpContext(Array.Empty<byte>(), "text/plain");
+
+            await CallOnResultExecutionAsync(attribute, new Func<string>(() => string.Empty).Method, "123", httpContext);
+        }
+
+        [Fact]
         public async Task OnResultExecutionAsync_ValidResult_ResetResponseStream()
         {
             const string content = "123";
 
             JSchemaValidationFilterAttribute attribute = new JSchemaValidationFilterAttribute();
 
-            HttpContext httpContext = new DefaultHttpContext();
-            httpContext.Response.Body = new MemoryStream();
+            HttpContext httpContext = ObjectFactory.CreateHttpContext();
 
             ResultExecutedContext result = await CallOnResultExecutionAsync(attribute, new Func<int>(() => int.MaxValue).Method, content, httpContext);
 
@@ -186,7 +195,10 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Tests
             string content = null,
             HttpContext httpContext = null)
         {
-            httpContext = httpContext ?? new DefaultHttpContext();
+            if (httpContext == null)
+            {
+                httpContext = ObjectFactory.CreateHttpContext();
+            }
 
             EmptyResult actionResult = new EmptyResult();
             object controller = new object();
@@ -196,8 +208,7 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Tests
                 {
                     ActionDescriptor = new ControllerActionDescriptor
                     {
-                        MethodInfo = methodInfo ?? typeof(JSchemaValidationFilterAttributeOutputTests).GetMethod(nameof(DummyReturnMethod)),
-                        
+                        MethodInfo = methodInfo ?? typeof(JSchemaValidationFilterAttributeOutputTests).GetMethod(nameof(DummyReturnMethod))
                     },
                     RouteData = new RouteData(),
                     HttpContext = httpContext

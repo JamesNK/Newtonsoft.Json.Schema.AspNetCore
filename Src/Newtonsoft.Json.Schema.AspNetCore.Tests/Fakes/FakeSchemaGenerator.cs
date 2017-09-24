@@ -13,7 +13,7 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Tests.Fakes
         public JSchema GeneratedSchema { get; set; }
         public Type GenerateSchemaType { get; set; }
 
-        public JSchema GetGenerateSchema(Type type)
+        public JSchema GetGeneratedSchema(Type type)
         {
             GenerateSchemaType = type;
 

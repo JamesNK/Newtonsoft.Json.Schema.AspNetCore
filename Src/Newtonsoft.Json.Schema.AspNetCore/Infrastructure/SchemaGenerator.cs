@@ -19,7 +19,7 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Infrastructure
             return schemaGenerator.Generate(type);
         }
 
-        public JSchema GetGenerateSchema(Type type)
+        public JSchema GetGeneratedSchema(Type type)
         {
             return SchemaCache.GetOrAdd(type, CreateSchema);
         }

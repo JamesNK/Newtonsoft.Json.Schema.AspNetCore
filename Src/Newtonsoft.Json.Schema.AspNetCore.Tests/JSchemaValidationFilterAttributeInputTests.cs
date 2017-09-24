@@ -94,6 +94,7 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Tests
 
             HttpContext httpContext = new DefaultHttpContext();
             httpContext.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes("'text'"));
+            httpContext.RequestServices = new FakeServiceProvider();
 
             await CallOnResourceExecutionAsync(
                 attribute,
@@ -115,8 +116,7 @@ namespace Newtonsoft.Json.Schema.AspNetCore.Tests
         {
             if (httpContext == null)
             {
-                httpContext = new DefaultHttpContext();
-                httpContext.Request.Body = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
+                httpContext = ObjectFactory.CreateHttpContext();
             }
 
             ResourceExecutingContext context = new ResourceExecutingContext(

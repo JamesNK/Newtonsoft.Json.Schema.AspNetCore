@@ -3,12 +3,12 @@
 // License: https://raw.github.com/JamesNK/Newtonsoft.Json.Schema.AspNetCore/master/LICENSE.md
 #endregion
 
-using System;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Newtonsoft.Json.Schema.AspNetCore.Infrastructure
 {
-    internal interface ISchemaGenerator
+    internal interface ISchemaLoader
     {
-        JSchema GetGeneratedSchema(Type type);
+        JSchema GetLoadedSchema(IHostingEnvironment hostingEnvironment, string path);
     }
 }

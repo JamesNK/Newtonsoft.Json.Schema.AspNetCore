@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newtonsoft.Json.Schema.AspNetCore", "Newtonsoft.Json.Schema.AspNetCore\Newtonsoft.Json.Schema.AspNetCore.csproj", "{6EB46832-67AC-4F1F-AE22-B9B6F12FB989}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newtonsoft.Json.Schema.AspNetCore.Tests", "Newtonsoft.Json.Schema.AspNetCore.Tests\Newtonsoft.Json.Schema.AspNetCore.Tests.csproj", "{70E1E3B7-25DF-41F6-B12F-F8E8596308C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Newtonsoft.Json.Schema.AspNetCore.TestWebsite", "Newtonsoft.Json.Schema.AspNetCore.TestWebsite\Newtonsoft.Json.Schema.AspNetCore.TestWebsite.csproj", "{64ADDD4C-92D1-4CEE-AE88-29ACA61A696B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{70E1E3B7-25DF-41F6-B12F-F8E8596308C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70E1E3B7-25DF-41F6-B12F-F8E8596308C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70E1E3B7-25DF-41F6-B12F-F8E8596308C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64ADDD4C-92D1-4CEE-AE88-29ACA61A696B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64ADDD4C-92D1-4CEE-AE88-29ACA61A696B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64ADDD4C-92D1-4CEE-AE88-29ACA61A696B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64ADDD4C-92D1-4CEE-AE88-29ACA61A696B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
