@@ -37,7 +37,14 @@ namespace Newtonsoft.Json.Schema.AspNetCore
         internal ISchemaGenerator SchemaGenerator = new SchemaGenerator();
         internal ISchemaLoader SchemaLoader = new SchemaLoader();
 
+        /// <summary>
+        /// Gets or sets the path of the schema file used to validate the request.
+        /// </summary>
         public string RequestSchema { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path of the schema file used to validate the response.
+        /// </summary>
         public string ResponseSchema { get; set; }
 
         private ActionValidationModel GetModel(ActionDescriptor actionDescriptor, IServiceProvider serviceProvider)
