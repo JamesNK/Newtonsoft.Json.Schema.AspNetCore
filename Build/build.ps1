@@ -9,6 +9,7 @@
   $signKeyPath = "C:\Development\Releases\newtonsoft.snk"
   $buildDocumentation = $false
   $buildNuGet = $true
+  $msbuildVerbosity = 'minimal'
   $treatWarningsAsErrors = $false
   $workingName = if ($workingName) {$workingName} else {"Working"}
   $netCliChannel = "2.0"
@@ -58,7 +59,7 @@ task Build -depends Clean {
 
   mkdir "$buildDir\Temp" -Force
   EnsureNuGetExists
-  EnsureNuGetPacakge "vswhere" $vswherePath $vswhereVersion
+  EnsureNuGetPackage "vswhere" $vswherePath $vswhereVersion
 
   $script:msBuildPath = GetMsBuildPath
   Write-Host "MSBuild path $script:msBuildPath"
@@ -100,7 +101,7 @@ task Package -depends Build {
 
     $targetFrameworks = ($script:enabledBuilds | Select-Object @{Name="Framework";Expression={$_.Framework}} | select -expand Framework) -join ";"
 
-    exec { & $script:msBuildPath "/t:pack" "/p:IncludeSource=true" "/p:Configuration=Release" "/p:TargetFrameworks=`"$targetFrameworks`"" "$workingSourceDir\Newtonsoft.Json.Schema.AspNetCore\Newtonsoft.Json.Schema.AspNetCore.csproj" }
+    exec { & $script:msBuildPath "/t:pack" "/v:$msbuildVerbosity" "/p:IncludeSource=true" "/p:Configuration=Release" "/p:TargetFrameworks=`"$targetFrameworks`"" "$workingSourceDir\Newtonsoft.Json.Schema.AspNetCore\Newtonsoft.Json.Schema.AspNetCore.csproj" }
 
     mkdir $workingDir\NuGet
     move -Path $workingSourceDir\Newtonsoft.Json.Schema.AspNetCore\bin\Release\*.nupkg -Destination $workingDir\NuGet
@@ -134,12 +135,12 @@ function NetCliBuild()
   Write-Host -ForegroundColor Green "Restoring packages for $libraryFrameworks in $projectPath"
   Write-Host
 
-  exec { & $script:msBuildPath "/t:restore" "/p:Configuration=Release" "/p:LibraryFrameworks=`"$libraryFrameworks`"" "/p:TestFrameworks=`"$testFrameworks`"" $projectPath | Out-Default } "Error restoring $projectPath"
+  exec { & $script:msBuildPath "/t:restore" "/v:$msbuildVerbosity" "/p:Configuration=Release" "/p:LibraryFrameworks=`"$libraryFrameworks`"" "/p:TestFrameworks=`"$testFrameworks`"" $projectPath | Out-Default } "Error restoring $projectPath"
 
   Write-Host -ForegroundColor Green "Building $libraryFrameworks in $projectPath"
   Write-Host
 
-  exec { & $script:msBuildPath "/t:build" $projectPath "/p:Configuration=Release" "/p:LibraryFrameworks=`"$libraryFrameworks`"" "/p:TestFrameworks=`"$testFrameworks`"" "/p:AssemblyOriginatorKeyFile=$signKeyPath" "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:AdditionalConstants=$additionalConstants" }
+  exec { & $script:msBuildPath "/t:build" "/v:$msbuildVerbosity" $projectPath "/p:Configuration=Release" "/p:LibraryFrameworks=`"$libraryFrameworks`"" "/p:TestFrameworks=`"$testFrameworks`"" "/p:AssemblyOriginatorKeyFile=$signKeyPath" "/p:SignAssembly=$signAssemblies" "/p:TreatWarningsAsErrors=$treatWarningsAsErrors" "/p:AdditionalConstants=$additionalConstants" }
 }
 
 function EnsureNuGetExists()
@@ -150,7 +151,7 @@ function EnsureNuGetExists()
   }
 }
 
-function EnsureNuGetPacakge($packageName, $packagePath, $packageVersion)
+function EnsureNuGetPackage($packageName, $packagePath, $packageVersion)
 {
   if (!(Test-Path $packagePath))
   {
